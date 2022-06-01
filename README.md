@@ -1,5 +1,5 @@
 # mini_project
-using Spring Boot Framework
+Spring Boot Framework
 
 #save wallet
 method POST
