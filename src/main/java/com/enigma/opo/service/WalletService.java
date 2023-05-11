@@ -10,4 +10,5 @@ public interface WalletService {
     public Wallet createWallet(Wallet wallet);
     public  Wallet topUp(BigDecimal topUpAmount , String phoneNUmber);
     public List<Wallet> findAllWallet();
+    public List<Wallet> getAllWalletsbyBalance(BigDecimal balance);
 }

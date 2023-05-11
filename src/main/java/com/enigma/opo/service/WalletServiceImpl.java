@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WalletServiceImpl implements WalletService{
@@ -19,7 +20,7 @@ public class WalletServiceImpl implements WalletService{
     public Wallet debit(String phoneNummber, BigDecimal amount) {
         Wallet wallet = walletRepository.findWalletByPhoneNumber(phoneNummber);//nampung object wallet
         BigDecimal money = wallet.getBalance();
-        wallet.setBalance(wallet.getBalance().subtract(amount));//subtract mengurangi
+        wallet.setBalance(money.subtract(amount));//subtract mengurangi
         if (!wallet.getBalance().subtract(amount).equals(0)){
             System.out.println("Saldo ada ");
         }
@@ -44,4 +45,11 @@ public class WalletServiceImpl implements WalletService{
     public List<Wallet> findAllWallet() {
         return walletRepository.findAll();
     }
+
+    @Override
+    public List<Wallet> getAllWalletsbyBalance(BigDecimal balance) {
+        return walletRepository.findAll().stream().filter(wallet -> wallet.getBalance().compareTo(balance) > 0).collect(Collectors.toList());
+
+    }
+
 }

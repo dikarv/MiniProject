@@ -32,8 +32,13 @@ public class WalletController  {
         return walletService.topUp(topUpAmount,phoneNUmber);
     }
 
-@GetMapping("/wallets")
+    @GetMapping("/wallets")
     public List<Wallet> findAllWallet() {
         return walletService.findAllWallet();
     }
+    @PostMapping("/get/balance")
+    public List<Wallet> getAllWalletsbyBalance(@RequestParam (name = "balance") BigDecimal balance) {
+        return walletService.getAllWalletsbyBalance(balance);
+    }
 }
+
