@@ -16,15 +16,20 @@ public class WalletServiceImpl implements WalletService{
 
     @Override
     public Wallet debit(String phoneNummber, BigDecimal amount) {
-        Wallet wallet = walletRepository.findWalletByPhoneNumber(phoneNummber);//nampung object wallet
-        BigDecimal money = wallet.getBalance();
-        wallet.setBalance(money.subtract(amount));//subtract mengurangi
-        if (!wallet.getBalance().subtract(amount).equals(0)){
-            System.out.println("Saldo ada ");
-        }
-        walletRepository.save(wallet);
+         List<Wallet> wallets = walletRepository.findAllByPhoneNumber(phoneNummber);
 
-        return wallet;
+    wallets.stream().forEach(wallet -> {
+        BigDecimal balance = wallet.getBalance();
+        BigDecimal newBalance = balance.subtract(amount);
+        if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new InsufficientBalanceException("Saldo tidak mencukupi");
+        }
+        wallet.setBalance(newBalance);
+    });
+
+    walletRepository.saveAll(wallets);
+
+    return wallets.get(0);
     }
 
     @Override
