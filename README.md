@@ -24,4 +24,8 @@ method POST
 Request Params
 localhost:8070/topup?topup=25000&phone=081xxxxxxxxx
 
+
+This application is a mini project from
+the payment method uses an API using the postgres database and the Java programming language with the Spring Boot framework
+
 Thank you
